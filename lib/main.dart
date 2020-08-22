@@ -14,8 +14,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var _index = 0;
+  var _totalScore = 0;
 
-  void _sampelAnswer() {
+  void _resetQuiz() {
+    setState(() {
+      _index = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _sampelAnswer(int score) {
+    _totalScore += score;
+
     setState(() {
       _index += 1;
     });
@@ -28,17 +38,32 @@ class _MyAppState extends State<MyApp> {
 
   final sampelObjects = [
     {
-      'questionText': 'Whats your favourite color?',
-      'answers': ['Black', 'Red', 'White']
+      'questionText': 'What\'s your favorite color?',
+      'answers': [
+        {'text': 'Black', 'score': 10},
+        {'text': 'Red', 'score': 5},
+        {'text': 'Green', 'score': 3},
+        {'text': 'White', 'score': 1},
+      ],
     },
     {
-      'questionText': 'Whats your favourite animal?',
-      'answers': ['Cat', 'Dog', 'Turtle']
+      'questionText': 'What\'s your favorite animal?',
+      'answers': [
+        {'text': 'Rabbit', 'score': 3},
+        {'text': 'Snake', 'score': 11},
+        {'text': 'Elephant', 'score': 5},
+        {'text': 'Lion', 'score': 9},
+      ],
     },
     {
-      'questionText': 'Whats your favourite jobs?',
-      'answers': ['Manager', 'Director', 'Commissioner']
-    }
+      'questionText': 'Who\'s your favorite instructor?',
+      'answers': [
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+      ],
+    },
   ];
 
   @override
@@ -51,9 +76,8 @@ class _MyAppState extends State<MyApp> {
           ? Quiz(
               sampelAnswer: _sampelAnswer,
               sampelObjects: sampelObjects,
-              index: _index
-            )
-          : Result(),
+              index: _index)
+          : Result(_totalScore, _resetQuiz),
     ));
   }
 }
